@@ -1,7 +1,15 @@
-import { useState } from 'react'
+import { ThemeProvider } from 'styled-components'
+import Dashboard from './pages/Dashboard'
+import { GlobalStyle } from './styles/GlobalStyle'
+import { themeDefault } from './styles/themes/themeDefault'
 
 function App() {
-  return <h1></h1>
+  return (
+    <ThemeProvider theme={themeDefault}>
+      <GlobalStyle />
+      <Dashboard />
+    </ThemeProvider>
+  )
 }
 
 export default App
