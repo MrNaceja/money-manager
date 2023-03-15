@@ -1,6 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const StyledButton = styled.button`
+interface StyledButtonProps{
+    fillWidth?: boolean
+}
+
+const StyledButton = styled.button<StyledButtonProps>`
     padding: .75rem;
     border-radius:5px;
     cursor:pointer;
@@ -8,7 +12,9 @@ const StyledButton = styled.button`
     border:none;
     display:flex;
     align-items: center;
+    justify-content: center;
     column-gap: .75rem;
+    ${props => props.fillWidth && css` width: 100%;`};
 `
 
 export const StyledButtonOutlined = styled(StyledButton)`
