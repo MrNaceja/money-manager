@@ -1,11 +1,14 @@
 import styled from "styled-components";
 
 const StyledButton = styled.button`
-    padding: .5rem;
+    padding: .75rem;
     border-radius:5px;
     cursor:pointer;
     transition: 0.2s;
     border:none;
+    display:flex;
+    align-items: center;
+    column-gap: .75rem;
 `
 
 export const StyledButtonOutlined = styled(StyledButton)`
