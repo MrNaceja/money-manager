@@ -11,14 +11,14 @@ export default function Summary() {
             <StyledSummaryPerformanceCard>
                 <header>
                     <span>Receitas</span>
-                    <TrendDown size={32} />
+                    <TrendUp size={32} />
                 </header>
                 <strong>R$ 17.400,89</strong>
             </StyledSummaryPerformanceCard>
             <StyledSummaryExpenseCard>
                 <header>
                     <span>Despesas</span>
-                    <TrendUp size={32} />
+                    <TrendDown size={32} />
                 </header>
                 <strong>R$ 17.400,89</strong>
             </StyledSummaryExpenseCard>
