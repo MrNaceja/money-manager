@@ -1,0 +1,21 @@
+{
+    "transactions": [
+        {
+            "id": 1,
+            "name": "teste",
+            "category":"Categoria Teste",
+            "value": 2300,
+            "type": "performance",
+            "insertAt": "02/21/2023"
+        },
+        {
+            "id": 2,
+            "name": "outro",
+            "category":"Categoria nova",
+            "value": 800,
+            "type": "expense",
+            "insertAt": "03/16/2023"
+        }
+
+    ]
+}
