@@ -10,8 +10,7 @@ import {
     StyledTypePerformance } from "./styles";
 import { TrendDown, TrendUp, X } from 'phosphor-react'
 import { EnumTransactionType } from "../../contexts/ContextTransactionsProvider";
-import { useForm } from "react-hook-form";
-import { Controller } from 'react-hook-form/dist/controller';
+import { Controller, useForm } from "react-hook-form";
 
 interface FeldsFormNewTransaction{
     name: string;
