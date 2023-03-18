@@ -2,19 +2,23 @@ import { StyledButtonOutlined } from "../../styles/Button";
 import { StyledSearchFormContainer } from "./styles";
 import { MagnifyingGlass } from 'phosphor-react'
 import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { ContextTransactions } from "../../contexts/ContextTransactionsProvider";
 
 interface FieldSearch {
     search: string
 }
 
-export default function SearchForm() {
+export default function SearchForm() { 
+
+    const { loadTransactions } = useContext(ContextTransactions)
 
     const { register, handleSubmit, reset, formState: { isSubmitting }} = useForm<FieldSearch>({
         values: { search: "" }
     })
 
-    async function onSubmitSearch(search : FieldSearch) {
-        await new Promise(res => setTimeout(res, 2000))
+    async function onSubmitSearch({search} : FieldSearch) {
+        loadTransactions(search)
         reset()
     }
 

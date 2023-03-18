@@ -4,6 +4,11 @@ export const StyledTransactionsContainer = styled.main`
     width:100%;
     max-width: 1100px;
     margin: 3rem auto 0;
+    #no-transactions {
+        color: ${props => props.theme['gray-400']};
+        text-align: center;
+        margin-top: 3rem;
+    }
 `
 
 export const StyledTransactionsTable = styled.table`
@@ -21,6 +26,7 @@ export const StyledTransactionsTable = styled.table`
         }
         &:last-child {
             border-radius: 0 5px 5px 0;
+            font-size:.7rem;
         }
     }
 `

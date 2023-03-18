@@ -1,4 +1,5 @@
 import { ReactNode, useEffect, useState, createContext } from 'react';
+import { api } from '../utils/api';
 
 export enum EnumTransactionType {
   performance = 'performance',
@@ -16,6 +17,8 @@ interface Transaction {
 
 interface PropsContextTransactions {
     transactions: Transaction[];
+    loadTransactions: (queryFilter?: string) => void;
+    createNewTransaction: (newTransaction : Partial<Transaction>) => void
 }
 
 export const ContextTransactions = createContext({} as PropsContextTransactions)
@@ -24,20 +27,27 @@ interface PropsContextTransactionsProvider {
     children: ReactNode;
 }
 export default function ContextTransactionsProvider({ children } : PropsContextTransactionsProvider) {
-    const URL_API_BACK_END_GET_TRANSACTIONS = 'http://localhost:3000/transactions';
-
     const [transactions, setTransactions] = useState<Transaction[]>([]);
-    
-    async function loadTransactions() {
-      const res = await fetch(URL_API_BACK_END_GET_TRANSACTIONS)
-      const transactions = await res.json()
+
+    async function loadTransactions(queryFilter?: string) {
+      const res = await api.get('transactions', {
+        params: { q: queryFilter, _sort: 'insertAt', _order: 'asc' }
+      })
+      const transactions = res.data
       setTransactions(transactions)
+    }
+
+    async function createTransaction(newTransaction : Partial<Transaction>) {
+      const createdTransaction = (await api.post('/transactions', newTransaction)).data
+      setTransactions(lastTransactions => [createdTransaction, ...lastTransactions])
     }
 
     useEffect(() => { loadTransactions() }, [])
     
     return (
-      <ContextTransactions.Provider value={{ transactions: transactions }}>
+      <ContextTransactions.Provider value={
+        { transactions, loadTransactions, createNewTransaction: createTransaction }
+      }>
         { children }
       </ContextTransactions.Provider>
     )

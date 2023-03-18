@@ -9,34 +9,32 @@ import {
     StyledTypeExpense,
     StyledTypePerformance } from "./styles";
 import { TrendDown, TrendUp, X } from 'phosphor-react'
-import { EnumTransactionType } from "../../contexts/ContextTransactionsProvider";
+import { EnumTransactionType, ContextTransactions } from '../../contexts/ContextTransactionsProvider';
 import { Controller, useForm } from "react-hook-form";
+import { useContext } from 'react';
 
 interface FeldsFormNewTransaction{
     name: string;
     category: string;
-    price: number;
+    value: number;
     type: EnumTransactionType
 }
 
 export default function ModalTransaction() {
-
+    const { createNewTransaction } = useContext(ContextTransactions)
     const { 
         register, 
         handleSubmit, 
         reset, 
         formState: { isSubmitting },
         control 
-    } = useForm<FeldsFormNewTransaction>({
-    defaultValues: {
-        name: '',
-        category: '',
-        type: EnumTransactionType.performance
-    }
-    })
+    } = useForm<FeldsFormNewTransaction>()
 
     async function onSubmitCreateTransaction(formTransactionData : FeldsFormNewTransaction) {
-        await new Promise(res => setTimeout(res, 2000))
+        const { name, value, category, type } = formTransactionData
+        createNewTransaction({
+            name, value, category, type, insertAt: new Date().toISOString()
+        })
         reset()
     }
 
@@ -61,7 +59,7 @@ export default function ModalTransaction() {
                         type="number" 
                         placeholder="Valor" 
                         required 
-                        {...register('price', { valueAsNumber: true})} 
+                        {...register('value', { valueAsNumber: true})} 
                     />
                     <input 
                         type="text" 
@@ -89,7 +87,6 @@ export default function ModalTransaction() {
                             )
                         }}
                     />
-
                     <StyledButtonFilled fillWidth disabled={isSubmitting}>Pronto</StyledButtonFilled>
                 </StyledModalForm>
             </StyledModalBox>

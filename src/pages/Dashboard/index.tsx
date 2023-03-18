@@ -18,35 +18,39 @@ export default function Dashboard() {
         <Summary />
         <StyledTransactionsContainer>
           <SearchForm />
-          <StyledTransactionsTable>
-            <tbody>
-              {
-                transactions.map(transaction => {
-                 return (
-                    <tr key={transaction.id}>
-                      <td>{transaction.name}</td>
-                      <td>
-                        {
-                          transaction.type == 'performance' &&
-                            <StyledHighlightValuePerformance>
-                              {formatterNumber.format(transaction.value)}
-                            </StyledHighlightValuePerformance>
-                        }
-                        {
-                          transaction.type == 'expense' &&
-                            <StyledHighlightValueExpense>
-                              {formatterNumber.format(transaction.value)}
-                            </StyledHighlightValueExpense>
-                        }
-                        </td>
-                      <td>{transaction.category}</td>
-                      <td>{formatterDate.format(new Date(transaction.insertAt))}</td>
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </StyledTransactionsTable>
+          {
+            transactions.length == 0 
+            ? <h1 id="no-transactions">Não há transações :(</h1>
+            : <StyledTransactionsTable>
+                <tbody>
+                  {
+                    transactions.map(transaction => {
+                    return (
+                        <tr key={transaction.id}>
+                          <td>{transaction.name}</td>
+                          <td>
+                            {
+                              transaction.type == 'performance' &&
+                                <StyledHighlightValuePerformance>
+                                  {formatterNumber.format(transaction.value)}
+                                </StyledHighlightValuePerformance>
+                            }
+                            {
+                              transaction.type == 'expense' &&
+                                <StyledHighlightValueExpense>
+                                  {formatterNumber.format(transaction.value)}
+                                </StyledHighlightValueExpense>
+                            }
+                            </td>
+                          <td>{transaction.category}</td>
+                          <td>{formatterDate.format(new Date(transaction.insertAt))}</td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </StyledTransactionsTable>
+          } 
         </StyledTransactionsContainer>
        </>
     )
