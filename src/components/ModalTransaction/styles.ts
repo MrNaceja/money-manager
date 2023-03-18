@@ -1,12 +1,13 @@
 import { Overlay, Content, Close } from "@radix-ui/react-dialog";
 import { Root as TypeContainer, Item as Type } from '@radix-ui/react-radio-group';
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const StyledModalClose = styled(Close)`
     line-height: 0;
     color: ${props => props.theme["gray-300"]};
     background:transparent;
     border: none;
+    cursor:pointer;
 `
 
 export const StyledModalOverlay = styled(Overlay)`

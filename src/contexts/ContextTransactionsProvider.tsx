@@ -1,13 +1,19 @@
 import { ReactNode, useEffect, useState, createContext } from 'react';
 
+export enum EnumTransactionType {
+  performance = 'performance',
+  expense = 'expense'
+}
+
 interface Transaction {
     id: number;
     name: string;
     value: number;
     category: string;
-    type: 'performance' | 'expense';
+    type: EnumTransactionType;
     insertAt: string;
-  }
+}
+
 interface PropsContextTransactions {
     transactions: Transaction[];
 }

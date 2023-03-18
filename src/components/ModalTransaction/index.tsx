@@ -9,8 +9,38 @@ import {
     StyledTypeExpense,
     StyledTypePerformance } from "./styles";
 import { TrendDown, TrendUp, X } from 'phosphor-react'
+import { EnumTransactionType } from "../../contexts/ContextTransactionsProvider";
+import { useForm } from "react-hook-form";
+import { Controller } from 'react-hook-form/dist/controller';
+
+interface FeldsFormNewTransaction{
+    name: string;
+    category: string;
+    price: number;
+    type: EnumTransactionType
+}
 
 export default function ModalTransaction() {
+
+    const { 
+        register, 
+        handleSubmit, 
+        reset, 
+        formState: { isSubmitting },
+        control 
+    } = useForm<FeldsFormNewTransaction>({
+    defaultValues: {
+        name: '',
+        category: '',
+        type: EnumTransactionType.performance
+    }
+    })
+
+    async function onSubmitCreateTransaction(formTransactionData : FeldsFormNewTransaction) {
+        await new Promise(res => setTimeout(res, 2000))
+        reset()
+    }
+
     return (
         <Dialog.Portal>
             <StyledModalOverlay />
@@ -21,23 +51,47 @@ export default function ModalTransaction() {
                         <X size={24}/>
                     </StyledModalClose>
                 </header>
-                <StyledModalForm>
-                    <input type="text" placeholder="Nome" required/>
-                    <input type="number" placeholder="Valor" required/>
-                    <input type="text" placeholder="Categoria" required/>
+                <StyledModalForm onSubmit={handleSubmit(onSubmitCreateTransaction)}>
+                    <input 
+                        type="text" 
+                        placeholder="Nome" 
+                        required 
+                        {...register('name')} 
+                    />
+                    <input 
+                        type="number" 
+                        placeholder="Valor" 
+                        required 
+                        {...register('price', { valueAsNumber: true})} 
+                    />
+                    <input 
+                        type="text" 
+                        placeholder="Categoria" 
+                        required 
+                        {...register('category')} 
+                    />
 
-                    <StyledTransactionTypeContainer>
-                        <StyledTypePerformance value="performance">
-                            <span>Receitas</span>
-                            <TrendUp size={32} />
-                        </StyledTypePerformance>
-                        <StyledTypeExpense value="expense">
-                            <span>Despesas</span>
-                            <TrendDown size={32} />
-                        </StyledTypeExpense>
-                    </StyledTransactionTypeContainer>
+                    <Controller  
+                        control={control}
+                        name='type'
+                        defaultValue={EnumTransactionType.performance}
+                        render={({ field }) => {
+                            return (
+                                <StyledTransactionTypeContainer onValueChange={field.onChange} value={field.value}>
+                                    <StyledTypePerformance value={EnumTransactionType.performance}>
+                                        <span>Receitas</span>
+                                        <TrendUp size={32} />
+                                    </StyledTypePerformance>
+                                    <StyledTypeExpense value={EnumTransactionType.expense}>
+                                        <span>Despesas</span>
+                                        <TrendDown size={32} />
+                                    </StyledTypeExpense>
+                                </StyledTransactionTypeContainer>
+                            )
+                        }}
+                    />
 
-                    <StyledButtonFilled fillWidth >Pronto</StyledButtonFilled>
+                    <StyledButtonFilled fillWidth disabled={isSubmitting}>Pronto</StyledButtonFilled>
                 </StyledModalForm>
             </StyledModalBox>
         </Dialog.Portal>    
