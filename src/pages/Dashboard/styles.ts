@@ -17,6 +17,14 @@ export const StyledTransactionsTable = styled.table`
     width: 100%;
     color: ${props => props.theme['gray-300']};
     margin-top: 1rem;
+    overflow-y: scroll;
+    max-height: 250px;  
+    display: block;
+    tbody {
+        display: table;
+        width: 100%;
+        padding-right: 1rem;
+    }
     td {
         padding:.75rem;
         background: ${prosp => prosp.theme['gray-700']};
@@ -28,6 +36,17 @@ export const StyledTransactionsTable = styled.table`
             border-radius: 0 5px 5px 0;
             font-size:.7rem;
         }
+    }
+    &::-webkit-scrollbar {
+        width: 5px;
+    }
+    &::-webkit-scrollbar-track {
+        background: ${props => props.theme['gray-700']};
+        border-radius:5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: ${props => props.theme['gray-500']};
+        border-radius:5px;
     }
 `
 
